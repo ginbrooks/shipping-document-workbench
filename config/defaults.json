@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "notes": "只含用户业务预设；不是法定或通用承运标准。所有null须按本单补充，不用测试参数替代。",
+  "units": {
+    "dimensions": "mm",
+    "weights": "g",
+    "money": "decimal_string"
+  },
+  "route_presets": [
+    {
+      "id": "road_user_default",
+      "mode": "road",
+      "max_unit_height_mm": 2600,
+      "height_includes_pallet": true,
+      "clearance_mm": 0,
+      "constraints_confirmed": false,
+      "source": "用户当前业务常用值；含托口径及净空需逐单确认"
+    },
+    {
+      "id": "air_user_default",
+      "mode": "air",
+      "max_unit_height_mm": 1550,
+      "height_includes_pallet": true,
+      "clearance_mm": 0,
+      "constraints_confirmed": false,
+      "source": "用户当前业务常用值；非所有航线统一上限"
+    }
+  ],
+  "pallet_presets": [
+    {
+      "id": "p1200x1000",
+      "name": "1200 × 1000 mm",
+      "length_mm": 1200,
+      "width_mm": 1000,
+      "height_mm": null,
+      "tare_g": null,
+      "max_payload_g": null
+    },
+    {
+      "id": "p1200x800",
+      "name": "1200 × 800 mm",
+      "length_mm": 1200,
+      "width_mm": 800,
+      "height_mm": null,
+      "tare_g": null,
+      "max_payload_g": null
+    }
+  ],
+  "vehicle_presets": [
+    {
+      "name": "常温车（待填实参）",
+      "thermal_type": "ambient",
+      "usable_l_mm": null,
+      "usable_w_mm": null,
+      "usable_h_mm": null,
+      "door_w_mm": null,
+      "door_h_mm": null,
+      "payload_g": null,
+      "temp_min_c": null,
+      "temp_max_c": null
+    },
+    {
+      "name": "冷链车（待填实参）",
+      "thermal_type": "cold_chain",
+      "usable_l_mm": null,
+      "usable_w_mm": null,
+      "usable_h_mm": null,
+      "door_w_mm": null,
+      "door_h_mm": null,
+      "payload_g": null,
+      "temp_min_c": null,
+      "temp_max_c": null
+    }
+  ],
+  "planning": {
+    "overhang_allowed": false,
+    "allow_tipping": false,
+    "allow_mixed_products": false,
+    "allow_mixed_batches": false,
+    "allow_mixed_contracts": false,
+    "allow_repalletizing": false,
+    "stacked_pallets": false,
+    "algorithm": "grid_plus_two_orientation_strips_v1"
+  },
+  "rounding": {
+    "money_mode": "ROUND_HALF_UP",
+    "currency_decimals": {
+      "EUR": 2,
+      "USD": 2,
+      "CNY": 2
+    },
+    "weight_display_kg_decimals": 3,
+    "volume_display_m3_decimals": 3
+  },
+  "upload": {
+    "max_upload_mb": 100,
+    "max_expanded_mb": 500,
+    "max_archive_entries": 1000,
+    "max_zip_depth": 2,
+    "rar_mode": "register_as_unparsed"
+  },
+  "ai": {
+    "enabled": false,
+    "model": null,
+    "api_key_env": "SHIPPING_AI_API_KEY",
+    "max_text_chars": 12000,
+    "max_image_pages": 3,
+    "max_repair_attempts": 1,
+    "require_explicit_send": true
+  },
+  "server": {
+    "address": "127.0.0.1"
+  }
+}

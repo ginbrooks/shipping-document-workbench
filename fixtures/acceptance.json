@@ -1,0 +1,441 @@
+{
+  "schema_version": 1,
+  "notice": "合成软件测试，不是工厂真实箱规、车辆、承运限制或价格；不得自动回填真实出运。",
+  "adapter_contract": "base为测试输入，不是数据库快照。测试适配器将其映射到PRD模型；事实来源均记SYNTHETIC且confirmed=true。每个case在base深拷贝上应用set，点号数字表示列表索引；只修改列出的字段。",
+  "base": {
+    "contract_id": "TEST-CONTRACT-A",
+    "line_id": "TEST-LINE-A",
+    "product_code": "SYNTHETIC-TABLET",
+    "batch_no": "TEST-BATCH-001",
+    "base_unit": "TAB",
+    "base_quantity": 360000,
+    "units_per_inner": 25,
+    "inners_per_carton": 240,
+    "full_cartons": 60,
+    "partial_cartons": [],
+    "packing_spec": {
+      "outer_l_mm": 400,
+      "outer_w_mm": 300,
+      "outer_h_mm": 200,
+      "carton_net_g": 4000,
+      "carton_gross_g": 5000,
+      "allow_rotate_90": true,
+      "max_layers": 10,
+      "max_goods_height_mm": null,
+      "max_superimposed_g": null,
+      "temp_min_c": 15,
+      "temp_max_c": 25
+    },
+    "pallet_spec": {
+      "id": "TEST-PALLET",
+      "name": "SYNTHETIC 1200x1000",
+      "length_mm": 1200,
+      "width_mm": 1000,
+      "height_mm": 150,
+      "tare_g": 20000,
+      "max_payload_g": 1000000
+    },
+    "extras": {
+      "extra_height_mm": 0,
+      "extra_length_mm": 0,
+      "extra_width_mm": 0,
+      "auxiliary_g": 0
+    },
+    "route_legs": [
+      {
+        "id": "TEST-ROAD",
+        "mode": "road",
+        "max_unit_height_mm": 2600,
+        "max_unit_gross_g": null,
+        "clearance_mm": 0,
+        "constraints_confirmed": true,
+        "height_includes_pallet": true,
+        "vehicle_snapshot": {
+          "name": "SYNTHETIC-TRUCK",
+          "thermal_type": "ambient",
+          "usable_l_mm": 6000,
+          "usable_w_mm": 2400,
+          "usable_h_mm": 2700,
+          "door_w_mm": 2300,
+          "door_h_mm": 2650,
+          "payload_g": 10000000,
+          "temp_min_c": 15,
+          "temp_max_c": 25
+        }
+      },
+      {
+        "id": "TEST-AIR",
+        "mode": "air",
+        "max_unit_height_mm": 1550,
+        "max_unit_gross_g": 1000000,
+        "clearance_mm": 0,
+        "constraints_confirmed": true,
+        "height_includes_pallet": true,
+        "vehicle_snapshot": null
+      }
+    ],
+    "customer_price": {
+      "unit_price": "0.06",
+      "currency": "EUR",
+      "pricing_unit": "TAB",
+      "base_units_per_pricing_unit": 1
+    },
+    "customs_price": {
+      "unit_price": "0.04",
+      "currency": "USD",
+      "pricing_unit": "TAB",
+      "base_units_per_pricing_unit": 1
+    }
+  },
+  "example_valid_10_box_layout": [
+    {
+      "x_mm": 0,
+      "y_mm": 0,
+      "w_mm": 400,
+      "d_mm": 300,
+      "rotation": 0
+    },
+    {
+      "x_mm": 400,
+      "y_mm": 0,
+      "w_mm": 400,
+      "d_mm": 300,
+      "rotation": 0
+    },
+    {
+      "x_mm": 800,
+      "y_mm": 0,
+      "w_mm": 400,
+      "d_mm": 300,
+      "rotation": 0
+    },
+    {
+      "x_mm": 0,
+      "y_mm": 300,
+      "w_mm": 400,
+      "d_mm": 300,
+      "rotation": 0
+    },
+    {
+      "x_mm": 400,
+      "y_mm": 300,
+      "w_mm": 400,
+      "d_mm": 300,
+      "rotation": 0
+    },
+    {
+      "x_mm": 800,
+      "y_mm": 300,
+      "w_mm": 400,
+      "d_mm": 300,
+      "rotation": 0
+    },
+    {
+      "x_mm": 0,
+      "y_mm": 600,
+      "w_mm": 300,
+      "d_mm": 400,
+      "rotation": 90
+    },
+    {
+      "x_mm": 300,
+      "y_mm": 600,
+      "w_mm": 300,
+      "d_mm": 400,
+      "rotation": 90
+    },
+    {
+      "x_mm": 600,
+      "y_mm": 600,
+      "w_mm": 300,
+      "d_mm": 400,
+      "rotation": 90
+    },
+    {
+      "x_mm": 900,
+      "y_mm": 600,
+      "w_mm": 300,
+      "d_mm": 400,
+      "rotation": 90
+    }
+  ],
+  "layout_note": "这个坐标布局只是有效参考；任何满足约束的10箱布局均可，不强制等同参考坐标。",
+  "cases": [
+    {
+      "id": "A01",
+      "operation": "calculate_plan",
+      "set": {},
+      "expected": {
+        "pallet_count": 1,
+        "carton_counts": [
+          60
+        ],
+        "per_layer": 10,
+        "layers": [
+          6
+        ],
+        "heights_mm": [
+          1350
+        ],
+        "gross_g": 320000,
+        "net_g": 240000,
+        "volume_m3": "1.620",
+        "base_quantity": 360000
+      }
+    },
+    {
+      "id": "A02_70",
+      "operation": "calculate_plan",
+      "set": {
+        "full_cartons": 70,
+        "base_quantity": 420000
+      },
+      "expected": {
+        "pallet_count": 1,
+        "carton_counts": [
+          70
+        ],
+        "layers": [
+          7
+        ],
+        "heights_mm": [
+          1550
+        ],
+        "gross_g": 370000,
+        "volume_m3": "1.860"
+      }
+    },
+    {
+      "id": "A02_71",
+      "operation": "calculate_plan",
+      "set": {
+        "full_cartons": 71,
+        "base_quantity": 426000
+      },
+      "expected": {
+        "pallet_count": 2,
+        "carton_counts": [
+          70,
+          1
+        ],
+        "layers": [
+          7,
+          1
+        ],
+        "heights_mm": [
+          1550,
+          350
+        ],
+        "gross_g": 395000,
+        "volume_m3": "2.280"
+      }
+    },
+    {
+      "id": "A03",
+      "operation": "calculate_plan",
+      "set": {
+        "full_cartons": 70,
+        "base_quantity": 420000,
+        "route_legs.1.clearance_mm": 20
+      },
+      "expected": {
+        "pallet_count": 2,
+        "carton_counts": [
+          60,
+          10
+        ],
+        "heights_mm": [
+          1350,
+          350
+        ],
+        "gross_g": 390000,
+        "volume_m3": "2.040"
+      }
+    },
+    {
+      "id": "A04",
+      "operation": "calculate_plan",
+      "set": {
+        "packing_spec.max_layers": 4
+      },
+      "expected": {
+        "pallet_count": 2,
+        "carton_counts": [
+          40,
+          20
+        ],
+        "heights_mm": [
+          950,
+          550
+        ],
+        "gross_g": 340000,
+        "volume_m3": "1.800"
+      }
+    },
+    {
+      "id": "A05",
+      "operation": "calculate_plan",
+      "set": {
+        "pallet_spec.max_payload_g": 200000
+      },
+      "expected": {
+        "pallet_count": 2,
+        "carton_counts": [
+          40,
+          20
+        ],
+        "gross_g": 340000
+      }
+    },
+    {
+      "id": "A06_ROAD",
+      "operation": "calculate_plan",
+      "set": {
+        "full_cartons": 80,
+        "base_quantity": 480000,
+        "packing_spec.max_layers": 20,
+        "route_legs": [
+          {
+            "id": "TEST-ROAD",
+            "mode": "road",
+            "max_unit_height_mm": 2600,
+            "max_unit_gross_g": null,
+            "clearance_mm": 0,
+            "constraints_confirmed": true,
+            "height_includes_pallet": true,
+            "vehicle_snapshot": {
+              "name": "SYNTHETIC-TRUCK",
+              "thermal_type": "ambient",
+              "usable_l_mm": 6000,
+              "usable_w_mm": 2400,
+              "usable_h_mm": 2700,
+              "door_w_mm": 2300,
+              "door_h_mm": 2650,
+              "payload_g": 10000000,
+              "temp_min_c": 15,
+              "temp_max_c": 25
+            }
+          }
+        ]
+      },
+      "expected": {
+        "pallet_count": 1,
+        "carton_counts": [
+          80
+        ],
+        "heights_mm": [
+          1750
+        ],
+        "gross_g": 420000
+      }
+    },
+    {
+      "id": "A06_ROAD_AIR",
+      "operation": "calculate_plan",
+      "set": {
+        "full_cartons": 80,
+        "base_quantity": 480000,
+        "packing_spec.max_layers": 20
+      },
+      "expected": {
+        "pallet_count": 2,
+        "carton_counts": [
+          70,
+          10
+        ],
+        "heights_mm": [
+          1550,
+          350
+        ],
+        "gross_g": 440000
+      }
+    },
+    {
+      "id": "A07",
+      "operation": "validate_existing_A01_plan_without_replanning",
+      "set": {
+        "route_legs.0.vehicle_snapshot.door_h_mm": 1300
+      },
+      "expected": {
+        "status": "FAIL",
+        "reason": "EXCEEDS_DOOR_HEIGHT"
+      }
+    },
+    {
+      "id": "A08",
+      "operation": "validate_transport",
+      "set": {
+        "packing_spec.temp_min_c": 2,
+        "packing_spec.temp_max_c": 8
+      },
+      "expected": {
+        "status": "FAIL",
+        "reason": "TEMPERATURE_RANGE_NOT_COVERED"
+      }
+    },
+    {
+      "id": "A09",
+      "operation": "calculate_amounts",
+      "set": {},
+      "expected": {
+        "customer_amount": "21600.00",
+        "customer_currency": "EUR",
+        "customs_amount": "14400.00",
+        "customs_currency": "USD",
+        "cross_price_equality_check": false
+      }
+    },
+    {
+      "id": "A09_BOTTLE",
+      "operation": "calculate_amounts",
+      "set": {
+        "customer_price.unit_price": "1.50",
+        "customer_price.pricing_unit": "BOTTLE",
+        "customer_price.base_units_per_pricing_unit": 25
+      },
+      "expected": {
+        "customer_pricing_quantity": 14400,
+        "customer_amount": "21600.00"
+      }
+    },
+    {
+      "id": "A11",
+      "operation": "record_actual_gross_on_A01",
+      "set": {
+        "actual_pallet_gross_g": 321000
+      },
+      "expected": {
+        "effective_gross_g": 321000,
+        "estimated_gross_g_preserved": 320000
+      }
+    },
+    {
+      "id": "A23_QUANTITY",
+      "operation": "validate_quantity",
+      "set": {
+        "full_cartons": 59,
+        "base_quantity": 357000,
+        "partial_cartons": [
+          {
+            "id": "TEST-PARTIAL-1",
+            "base_quantity": 3000,
+            "outer_l_mm": 200,
+            "outer_w_mm": 300,
+            "outer_h_mm": 200,
+            "net_g": 2000,
+            "gross_g": 2500,
+            "stack_rule": {
+              "max_layers": 1
+            }
+          }
+        ]
+      },
+      "expected": {
+        "carton_count": 60,
+        "base_quantity": 357000,
+        "separate_packing_groups": 2
+      }
+    }
+  ],
+  "additional_cases": "A10/A12–A22/A24及A23完整分托由PRD验收表定义；本文件不重复列出所有业务断言。"
+}

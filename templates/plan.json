@@ -1,0 +1,25 @@
+{
+  "id": "plan",
+  "version": "1.0",
+  "type": "plan",
+  "scope_mode": "shipment",
+  "source_path": "",
+  "source_sha256": "generated-v1",
+  "context_allowlist": [],
+  "field_map": {},
+  "repeat_regions": [],
+  "required_fields": [
+    "shipper.name_en",
+    "consignee.name_en",
+    "lines.*.batch_no",
+    "lines.*.base_quantity"
+  ],
+  "dependency_paths": [
+    "lines",
+    "plan"
+  ],
+  "document_stage": "draft",
+  "output_format": "xlsx",
+  "sensitive_assets_reviewed": true,
+  "visual_checked": false
+}
