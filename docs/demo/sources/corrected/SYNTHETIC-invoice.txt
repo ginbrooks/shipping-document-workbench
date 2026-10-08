@@ -1,0 +1,7 @@
+SYNTHETIC TEST DOCUMENT — 全部为合成演示内容，不可用于出运。
+
+发票号: TEST-INVOICE-A
+收货人: SYNTHETIC BUYER LTD.
+客户币种: EUR
+客户合计金额: 21600.00
+基础数量 · SYNTHETIC TABLETS A: 360000 TAB

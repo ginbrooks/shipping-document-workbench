@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="在浏览器里体验可追溯的出运单证预检：发现数量、金额、批号与来源问题。全部使用合成数据。">
+  <title>单证预检台 · Shipping Document Workbench</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23152b43'/%3E%3Cpath d='M17 16h30v32H17zM24 25h16M24 32h16M24 39h10' stroke='white' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="https://github.com/ginbrooks/shipping-document-workbench"><span class="brandmark">▧</span><span>出运单证工作台<small>SHIPPING DOCUMENT WORKBENCH</small></span></a>
+    <a class="source-link" href="https://github.com/ginbrooks/shipping-document-workbench">查看源码 ↗</a>
+  </header>
+  <main>
+    <div class="eyebrow"><span class="status-dot"></span> INTERACTIVE DEMO <span class="synthetic-label">合成数据 · 本地计算</span></div>
+    <section class="hero">
+      <div><h1>同一票货，<br><span>每份单证都要对得上。</span></h1><p>金额差一点、批号漏一项、来源还没确认。<br>把需要人处理的问题找出来，再继续下一步。</p></div>
+      <aside class="shipment-card"><span class="overline">当前合成案例</span><strong>TEST-CONTRACT-A</strong><div>客户发票 <span>＋</span> 装箱单 <span>＋</span> 货代回件</div><footer>360,000 TAB <span>60 箱</span><span>EUR</span></footer></aside>
+    </section>
+    <section class="toolbar" aria-label="演示控制">
+      <div class="segmented"><button id="load-problem" class="selected" type="button">有问题的回件</button><button id="load-corrected" type="button">已修正的合成样例</button></div>
+      <button id="download" class="download" type="button">↓ 导出核对报告</button>
+    </section>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <section class="metrics" aria-label="预检结果">
+      <div><span>已通过</span><strong id="count-pass">—</strong><small>值相符且来源已核验</small></div>
+      <div><span>数值差异</span><strong class="red" id="count-mismatch">—</strong><small>需要回到原件核对</small></div>
+      <div><span>待人工核验</span><strong class="amber" id="count-review">—</strong><small>相符不等于已确认</small></div>
+      <div><span>缺项 / 无效来源</span><strong class="amber" id="count-missing">—</strong><small>必填项不能被跳过</small></div>
+    </section>
+    <div class="review-heading"><h2>逐项核对</h2><p>直接修改「原件抄录值」，结果会立即更新。单位按原件保留。</p></div>
+    <div id="review-state" class="review-state" role="status" aria-live="polite"></div>
+    <section id="documents" aria-label="单证字段"></section>
+    <section class="how-it-works"><h2>程序负责比较，人负责确认。</h2><div><p><b>01　确认基准</b><br>基准由 Python 的金额与业务规则生成。客户价、报关价分开计算。</p><p><b>02　保留来源</b><br>逐项保留合成文件名和定位。页面不读取、鉴定或修改真实原件。</p><p><b>03　带走记录</b><br>报告包含期望值、抄录值、状态、规则版本与本次输入指纹。</p></div></section>
+    <footer class="notice"><strong>SYNTHETIC DATA ONLY</strong><p id="notice">浏览器本地合成样例。基准由 Python 生成；不读取私人文件，不连接模型，不代表出运放行。</p><span>范围：10 项字段核对 · 3 类单证 · 当前合同</span></footer>
+  </main>
+</body>
+</html>
